@@ -8,7 +8,9 @@ const {
 } = require("../../controllers/users");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
+
 const uploadCloud = require("../../middlewares/uploadMiddleware");
+
 const {
   registerValidation,
   loginValidation,
