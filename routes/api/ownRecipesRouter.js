@@ -6,9 +6,9 @@ const {
 } = require("../../controllers/ownRecipes");
 
 const { asyncWrapper } = require("../../helpers/apiHelpers");
-const router = express.Router();
+const { uploadCloud } = require("../../middlewares");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
-const uploadCloud = require("../../middlewares/uploadMiddleware");
+const router = express.Router();
 
 router.get("/", authMiddleware, asyncWrapper(getOwnRecipesController));
 router.post(

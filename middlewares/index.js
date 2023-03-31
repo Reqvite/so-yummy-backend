@@ -1,5 +1,5 @@
-const upload = require("./upload");
+const uploadCloud = require("./uploadMiddleware");
 
 module.exports = {
-  upload,
+  uploadCloud,
 };
