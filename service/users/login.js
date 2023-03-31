@@ -29,7 +29,6 @@ const login = async (email, password) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
     },
   };
 };
