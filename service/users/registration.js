@@ -1,12 +1,15 @@
 const { RegistrationConflictError } = require("../../helpers/errors");
 const { User } = require("../../models/userModel");
+const gravatar = require("gravatar");
 
 const registration = async (name, email, password) => {
+  const avatarURL = gravatar.url(email);
   try {
     const user = new User({
       name,
       email,
       password,
+      avatarURL,
     });
 
     await user.save();
