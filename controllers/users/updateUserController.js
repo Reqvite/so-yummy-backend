@@ -5,6 +5,13 @@ const updateUserController = async (req, res) => {
 
   const { path } = req.file;
 
+  const result = await User.findOneAndUpdate({ _id }, req.body, {
+    new: true,
+  });
+  if (!result) {
+    throw new Error(404, "Not found!");
+  }
+
   const user = await User.findByIdAndUpdate(
     _id,
     { avatarURL: path },
