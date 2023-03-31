@@ -15,7 +15,19 @@ const errorHandler = (err, req, res, next) => {
   res.status(500).json({ message: err.message });
 };
 
+const ctrlWrapper = (ctrl) => {
+  const func = async (req, res, next) => {
+    try {
+      await ctrl(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+  return func;
+};
+
 module.exports = {
   errorHandler,
   asyncWrapper,
+  ctrlWrapper,
 };
