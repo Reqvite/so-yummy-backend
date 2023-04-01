@@ -1,12 +1,12 @@
 const { WrongParametersError } = require("../../helpers/errors");
-const { Ingredient } = require("../../models/ingredientModel");
+const { Recipe } = require("../../models/recipesModel");
 const { User } = require("../../models/userModel");
 
-const addOrRemoveIngredient = async (id, _id) => {
-  const ingredient = await Ingredient.findById(id);
+const addOrRemoveIngredient = async (recipeId, ingredientId, _id) => {
+  const recipe = await Recipe.findById(recipeId);
 
-  if (!ingredient) {
-    throw new WrongParametersError(`Ingredient not found`);
+  if (!recipe) {
+    throw new WrongParametersError(`Recipe not found`);
   }
 
   const user = await User.findById(_id);
@@ -15,17 +15,26 @@ const addOrRemoveIngredient = async (id, _id) => {
     throw new WrongParametersError(`User not found`);
   }
 
-  const isProductAlreadyAdded = user.shoppingList.includes(id);
+  const [ingredient] = recipe.ingredients.filter(
+    ({ id }) => id.toString() === ingredientId
+  );
 
-  if (isProductAlreadyAdded) {
-    user.shoppingList.pull(id);
-
-    await user.save();
-
-    return user.shoppingList;
+  if (!ingredient) {
+    throw new WrongParametersError(`Ingredient not found`);
   }
 
-  user.shoppingList.push(id);
+  const index = user.shoppingList.findIndex(
+    ({ id }) => id.toString() === ingredient.id.toString()
+  );
+
+  if (index !== -1) {
+    user.shoppingList.splice(index, 1);
+  } else {
+    user.shoppingList.push({
+      id: ingredient.id.toString(),
+      measure: ingredient.measure,
+    });
+  }
 
   await user.save();
 

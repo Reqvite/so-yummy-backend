@@ -1,3 +1,4 @@
 node_modules/
 .env
 __test__
+controllers/ownRecipes/getOwnRecipesController.js

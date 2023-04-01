@@ -1,11 +1,11 @@
 const { addOrRemoveIngredient } = require("../../service/shopping");
 
 const addOrRemoveIngredientController = async (req, res) => {
-  console.log(req.params.ingredientId);
+  const { recipeId, ingredientId } = req.body;
   const { _id } = req.user;
 
-  const recipe = await addOrRemoveIngredient(req.params.ingredientId, _id);
-  res.status(201).json({ status: "succes", code: 201, recipe });
+  const shoppingList = await addOrRemoveIngredient(recipeId, ingredientId, _id);
+  res.status(201).json({ status: "succes", code: 201, shoppingList });
 };
 
 module.exports = {

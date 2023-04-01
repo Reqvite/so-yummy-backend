@@ -1,4 +1,3 @@
-const { ctrlWrapper } = require("../../helpers/apiHelpers");
 const { Recipe } = require("../../models/recipesModel");
 
 const getRecipes = async (req, res) => {
@@ -22,5 +21,5 @@ const sortRecipes = (arr) => {
 };
 
 module.exports = {
-  getRecipes: ctrlWrapper(getRecipes),
+  getRecipes,
 };
