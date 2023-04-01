@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    shoppingList: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
