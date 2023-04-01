@@ -2,6 +2,7 @@ const express = require("express");
 const {
   addOrRemoveIngredientController,
   getShoppingListController,
+  removeIngredientController,
 } = require("../../controllers/shopping");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
@@ -12,6 +13,11 @@ router.patch(
   "/recipe-ingredinet",
   authMiddleware,
   asyncWrapper(addOrRemoveIngredientController)
+);
+router.delete(
+  "/:ingredientId",
+  authMiddleware,
+  asyncWrapper(removeIngredientController)
 );
 
 module.exports = {
