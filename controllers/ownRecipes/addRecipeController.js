@@ -1,7 +1,8 @@
 const { addRecipe } = require("../../service/ownRecipes/addRecipe");
 
 const addRecipeController = async (req, res) => {
-  const { title, description, category, time, img, instructions } = req.body;
+  const { title, description, category, time, ingredients, img, instructions } =
+    req.body;
 
   const preview = req.file.path;
   const { _id } = req.user;
@@ -11,6 +12,7 @@ const addRecipeController = async (req, res) => {
     description,
     category,
     time,
+    // ingredients,
     preview,
     instructions,
     _id
