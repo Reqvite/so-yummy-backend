@@ -1,13 +1,17 @@
 const express = require("express");
-const router = express.Router();
+const {
+  getRecipes,
+  getCategoryController,
+  getCategoryPageController,
+} = require("../../controllers/recipes");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
-const ctrl = require("../../controllers/recipes/mainPage");
 
-const { getCategoryController } = require("../../controllers/recipes");
+const router = express.Router();
+
+router.get("/main-page", asyncWrapper(getRecipes));
 
 router.get("/category-list", asyncWrapper(getCategoryController));
-router.get("/main-page", ctrl.getRecipes);
-
+router.get("/:category", asyncWrapper(getCategoryPageController));
 module.exports = {
   recipesRouter: router,
 };
