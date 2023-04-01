@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", authMiddleware, asyncWrapper(getOwnRecipesController));
 router.post(
-  "/upload",
+  "/add",
   authMiddleware,
   uploadCloud.single("image"),
   asyncWrapper(addRecipeController)
