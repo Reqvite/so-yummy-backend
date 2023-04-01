@@ -21,6 +21,8 @@ const removeIngredient = async (ingredientId, _id) => {
     { $pull: { shoppingList: { id: ingredientId } } },
     { new: true }
   );
+
+  return ingredientId;
 };
 
 module.exports = {
