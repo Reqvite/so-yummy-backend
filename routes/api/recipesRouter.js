@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ctrl = require("../../controllers/recipes/mainPage");
 
-router.get("/main-page", ctrl.listRecipes);
+router.get("/main-page", ctrl.getRecipes);
 
 module.exports = {
   recipesRouter: router,
