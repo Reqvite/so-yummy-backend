@@ -6,6 +6,7 @@ const { authRouter } = require("./routes/api/authRouter");
 const { recipesRouter } = require("./routes/api/recipesRouter");
 const { errorHandler } = require("./helpers/apiHelpers");
 const { ownRecipes } = require("./routes/api/ownRecipesRouter");
+const { shoppingRouter } = require("./routes/api");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 
@@ -20,6 +21,7 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/own-recipes", ownRecipes);
+app.use("/api/shopping-list", shoppingRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(errorHandler);
 
