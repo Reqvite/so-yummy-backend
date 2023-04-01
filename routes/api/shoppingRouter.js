@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/", authMiddleware, asyncWrapper(getShoppingListController));
 router.patch(
-  "/:ingredientId",
+  "/recipe-ingredinet",
   authMiddleware,
   asyncWrapper(addOrRemoveIngredientController)
 );
