@@ -4,7 +4,7 @@ const { NotAuthorizideError } = require("../helpers/errors");
 
 const authMiddleware = async (req, res, next) => {
   try {
-    const { authorization } = req.headers;
+    const { authorization = "" } = req.headers;
     const [, token] = authorization.split(" ");
 
     if (!token) {
