@@ -25,5 +25,5 @@ router.delete(
 );
 
 module.exports = {
-  ownRecipes: router,
+  ownRecipesRouter: router,
 };
