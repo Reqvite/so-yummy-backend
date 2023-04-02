@@ -3,6 +3,7 @@ const {
   getRecipes,
   getCategoryController,
   getCategoryPageController,
+  getPopularRecipes,
   getRecipeByIdController,
 } = require("../../controllers/recipes");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
@@ -14,6 +15,7 @@ router.use(authMiddleware);
 
 router.get("/main-page", asyncWrapper(getRecipes));
 router.get("/category-list", asyncWrapper(getCategoryController));
+router.get("/popular", authMiddleware, asyncWrapper(getPopularRecipes));
 router.get("/:category", asyncWrapper(getCategoryPageController));
 router.get("/recipe/:id", asyncWrapper(getRecipeByIdController));
 

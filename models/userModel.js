@@ -24,6 +24,20 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    favoriteRecipes: [
+      {
+        _id: false,
+        recipeId: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: 'popularRecipe',
+        },
+        addedOn: {
+          type: Date,
+          default: new Date(),
+        },
+      },
+    ],
     shoppingList: {
       type: Array,
       default: [],
