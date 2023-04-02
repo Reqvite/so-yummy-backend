@@ -8,13 +8,12 @@ const {
 } = require("../../controllers/users");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
-
-const uploadCloud = require("../../middlewares/uploadMiddleware");
-
 const {
   registerValidation,
   loginValidation,
-} = require("../../middlewares/validationMiddleware");
+} = require("../../middlewares/validationMiddleWare");
+
+const uploadCloud = require("../../middlewares/uploadMiddleware");
 
 const router = express.Router();
 

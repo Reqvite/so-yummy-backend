@@ -2,7 +2,7 @@ const { WrongParametersError } = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
 const { User } = require("../../models/userModel");
 
-const addOrRemoveIngredient = async (recipeId, ingredientId, _id) => {
+const addIngredient = async (recipeId, ingredientId, _id) => {
   const recipe = await Recipe.findById(recipeId);
 
   if (!recipe) {
@@ -23,24 +23,22 @@ const addOrRemoveIngredient = async (recipeId, ingredientId, _id) => {
     throw new WrongParametersError(`Ingredient not found`);
   }
 
-  const index = user.shoppingList.findIndex(
+  const ingredientAlreadyExists = user.shoppingList.some(
     ({ id }) => id.toString() === ingredient.id.toString()
   );
 
-  if (index !== -1) {
-    user.shoppingList.splice(index, 1);
-  } else {
+  if (!ingredientAlreadyExists) {
     user.shoppingList.push({
       id: ingredient.id.toString(),
       measure: ingredient.measure,
     });
-  }
 
-  await user.save();
+    await user.save();
+  }
 
   return user.shoppingList;
 };
 
 module.exports = {
-  addOrRemoveIngredient,
+  addIngredient,
 };

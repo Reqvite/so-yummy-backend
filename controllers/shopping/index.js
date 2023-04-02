@@ -1,11 +1,9 @@
 const { removeIngredientController } = require("./removeIngredientController");
-const {
-  addOrRemoveIngredientController,
-} = require("./addOrRemoveIngredientController");
+const { addIngredientController } = require("./addIngredientController");
 const { getShoppingListController } = require("./getShoppingListController");
 
 module.exports = {
-  addOrRemoveIngredientController,
+  addIngredientController,
   getShoppingListController,
   removeIngredientController,
 };
