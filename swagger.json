@@ -105,6 +105,13 @@
           }
         }
       },
+      "CategoryListRecipes": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "description": "Name of category" }
+        }
+      },
       "RecipeId": {
         "type": "string",
         "description": "ID of the recipe"
@@ -266,9 +273,9 @@
       }
     },
 
-    "/api/recipes": {
+    "/api/own-recipes/": {
       "get": {
-        "tags": ["Recipes"],
+        "tags": ["Own-Recipes"],
         "summary": "Get own recipes",
         "security": [
           {
@@ -303,9 +310,11 @@
             "description": "Unauthorized"
           }
         }
-      },
+      }
+    },
+    "/api/own-recipes/add": {
       "post": {
-        "tags": ["Recipes"],
+        "tags": ["Own-Recipes"],
         "summary": "Add a recipe",
         "security": [
           {
@@ -352,9 +361,10 @@
         }
       }
     },
-    "/api/recipes/{recipeId}": {
+
+    "/api/own-recipes/{recipeId}": {
       "delete": {
-        "tags": ["Recipes"],
+        "tags": ["Own-Recipes"],
         "summary": "Remove a recipe",
         "security": [
           {
@@ -382,9 +392,9 @@
         }
       }
     },
-    "/main-page": {
+    "/api/recipes/main-page": {
       "get": {
-        "tags": ["MainRecipes"],
+        "tags": ["Recipes"],
         "summary": "Get a list of recipes",
         "parameters": [
           {
@@ -426,6 +436,120 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recipes/category-list": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get a list recipes category",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryListRecipes"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recipes/{category}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get category page",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "The category of the page to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "page": {
+                    "title": "Category Page",
+                    "category": "recipes",
+                    "products": [
+                      {
+                        "name": "Recipe 1",
+                        "description": "Recipe 1 description"
+                      },
+                      {
+                        "name": "Recipe 2",
+                        "description": "Recipe 2 description"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Category page not found"
                 }
               }
             }
