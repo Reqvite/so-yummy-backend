@@ -10,6 +10,8 @@ const router = express.Router();
 
 router.get("/favorite", authMiddleware, getFavoritesController);
 router.patch("/favorite/:id", authMiddleware, addFavoriteController);
-router.patch("/favorite/:id", authMiddleware, deleteFavoriteController);
+router.delete("/favorite/:id", authMiddleware, deleteFavoriteController);
 
-module.exports = router;
+module.exports = {
+  favoritesRouter: router,
+};

@@ -5,4 +5,6 @@ const router = express.Router()
 
 router.get("/", getPopularRecipes);
 
-module.exports = router;
+module.exports = {
+    popularRecipesRouter: router
+};

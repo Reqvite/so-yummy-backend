@@ -9,8 +9,8 @@ const swaggerDocument = require("./swagger.json");
 const { authRouter } = require("./routes/api/authRouter");
 const { errorHandler } = require("./helpers/apiHelpers");
 const { ownRecipesRouter } = require("./routes/api/ownRecipesRouter");
-const favoritesRouter = require("./routes/api/favoriteRouter");
-const popularRecipesRouter = require("./routes/api/popularRecipeRouter");
+const { favoritesRouter } = require("./routes/api/favoritesRouter");
+const { popularRecipesRouter } = require("./routes/api/popularRecipesRouter");
 const {
   recipesRouter,
   ingredientsRouter,
