@@ -6,5 +6,5 @@ const router = express.Router();
 router.get("/", getPopularRecipesController);
 
 module.exports = {
-  popularRecipeRouter: router,
+  popularRecipesRouter: router,
 };
