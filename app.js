@@ -28,7 +28,7 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/own-recipes", ownRecipesRouter);
-app.use("/api/favorite", favoritesRouter);
+app.use("/api/favorites", favoritesRouter);
 app.use("/api/popular-recipe", popularRecipesRouter);
 app.use("/api/ingredients", ingredientsRouter);
 app.use("/api/shopping-list", shoppingRouter);
