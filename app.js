@@ -10,6 +10,7 @@ const swaggerDocument = require("./swagger.json");
 
 const { authRouter } = require("./routes/api/authRouter");
 const { ownRecipesRouter } = require("./routes/api/ownRecipesRouter");
+
 const {
   recipesRouter,
   ingredientsRouter,
@@ -31,7 +32,6 @@ app.use(express.static("public"));
 app.use("/api/users", authRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/favorite", favoriteRouter);
-
 app.use("/api/own-recipes", ownRecipesRouter);
 app.use("/api/popular-recipe", popularRecipesRouter);
 app.use("/api/ingredients", ingredientsRouter);
