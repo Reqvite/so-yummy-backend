@@ -1,6 +1,6 @@
 const { Recipe } = require("../../models/recipesModel");
 
-const getRecipes = async (req, res) => {
+const getRecipesController = async (req, res) => {
   const result = await Recipe.find({}, "-createdAt -updatedAt");
   res.json(sortRecipes(result));
 };
@@ -21,5 +21,5 @@ const sortRecipes = (arr) => {
 };
 
 module.exports = {
-  getRecipes,
+  getRecipesController,
 };
