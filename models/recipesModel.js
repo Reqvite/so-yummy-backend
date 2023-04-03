@@ -25,10 +25,13 @@ const recipeSchema = Schema({
     type: String,
     required: [true, "instruction is required"],
   },
-  favorites: {
-    type: Array,
-    default: [],
-  },
+ favorites: [{
+        type: Schema.Types.ObjectId,
+        ref: "user",
+    }, ],
+  popularity: {
+        type: Number,
+    },
 });
 
 const Recipe = model("Recipe", recipeSchema);

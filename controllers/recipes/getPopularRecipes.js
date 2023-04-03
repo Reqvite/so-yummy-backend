@@ -1,16 +1,25 @@
-const { PopularRecipes } = require('../../models/popularRecipeModel');
+const { Recipe } = require("../../models/recipesModel");
+const { WrongParametersError } = require("../../helpers/errors");
 
 const getPopularRecipes = async (req, res) => {
-  const data = await PopularRecipes.find(
+  const result = await Recipe.aggregate([
     {
-      idFood: { $exists: true },
+      $project: {
+        favorites: 1,
+        title: 1,
+        thumb: 1,
+        description: 1,
+        count: { $size: "$favorites" },
+      },
     },
-    '-_id -users'
-  );
-
-  res.json({ food: data });
+    { $sort: { count: -1 } },
+    { $skip: 0 },
+    { $limit: 4 },
+  ]);
+  if (!result) {
+    throw WrongParametersError(404, "Not found");
+  }
+  res.json(result);
 };
 
-module.exports = {
-  getPopularRecipes,
-};
+module.exports = { getPopularRecipes };

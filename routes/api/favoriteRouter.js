@@ -5,15 +5,11 @@ const {
   deleteFavoriteController,
 } = require("../../controllers/favorite");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
-const { asyncWrapper } = require("../../helpers/apiHelpers");
+
 const router = express.Router();
 
-router.get('/', authMiddleware, asyncWrapper (getFavoritesController));
+router.get("/favorite", authMiddleware, getFavoritesController);
+router.patch("/favorite/:id", authMiddleware, addFavoriteController);
+router.patch("/favorite/:id", authMiddleware, deleteFavoriteController);
 
-router.post('/', authMiddleware, asyncWrapper (addFavoriteController));
-
-router.delete('/:idFood', authMiddleware, asyncWrapper (deleteFavoriteController));
-
-module.exports= {
-  favoriteRouter: router,
-};
+module.exports = router;
