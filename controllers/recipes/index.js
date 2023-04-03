@@ -1,11 +1,13 @@
-const { getRecipes } = require("./getRecipes");
 const { getCategoryController } = require("./getCategoryController");
 const { getCategoryPageController } = require("./getCategoryPageController");
 const { getRecipeByIdController } = require("./getRecipeByIdController");
+const {
+  getPopularRecipesController,
+} = require("./getPopularRecipesController");
 
 module.exports = {
-  getRecipes,
   getCategoryController,
   getCategoryPageController,
   getRecipeByIdController,
+  getPopularRecipesController,
 };
