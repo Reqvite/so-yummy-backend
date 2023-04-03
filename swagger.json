@@ -61,6 +61,15 @@
         "type": "object",
         "required": ["name", "email"],
         "properties": {
+          "name": {
+            "type": "string",
+            "example": "Bob"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "email@gmail.com"
+          },
           "avatar": {
             "type": "string",
             "format": "binary"
@@ -70,7 +79,7 @@
       "Recipe": {
         "type": "object",
         "properties": {
-          "name": {
+          "title": {
             "type": "string",
             "description": "Name of the recipe"
           },
@@ -78,43 +87,138 @@
             "type": "string",
             "description": "Description of the recipe"
           },
-          "image": {
+          "category": {
             "type": "string",
-            "format": "binary",
-            "description": "Image file for the recipe"
+            "description": "Category the recipe"
+          },
+          "time": {
+            "type": "number",
+            "description": "Time cooking of the recipe"
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "Array ingredients of the recipe"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Instruction for cooking the recipe"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
           }
         },
-        "required": ["name"]
+        "required": ["title", "description", "category", "time", "instruction"]
       },
       "MainRecipe": {
         "type": "object",
-        "required": ["id", "name", "description"],
+        "required": ["title", "description", "category", "time", "instruction"],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier for the recipe"
-          },
-          "name": {
+          "title": {
             "type": "string",
-            "description": "Name of the recipe"
+            "description": "Title of the recipe"
           },
           "description": {
             "type": "string",
             "description": "Description of the recipe"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the recipe"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          },
+          "ingredients": {
+            "type": "array"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instruction how to cooking the recipe"
           }
         }
       },
       "CategoryListRecipes": {
-        "type": "object",
-        "required": ["name"],
+        "type": "array",
         "properties": {
-          "name": { "type": "string", "description": "Name of category" }
+          "list": {}
         }
       },
       "RecipeId": {
         "type": "string",
         "description": "ID of the recipe"
+      },
+      "GetRecipeByID": {
+        "type": "object",
+        "required": ["title", "description", "category", "time", "instruction"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the recipe"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the recipe"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          },
+          "ingredients": {
+            "type": "array"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instruction how to cooking the recipe"
+          }
+        }
+      },
+      "Ingredients": {
+        "type": "object",
+        "required": ["title", "description", "time"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          }
+        }
+      },
+      "ShoppingList": {
+        "type": "array",
+        "properties": {
+          "list": {}
+        }
+      },
+      "IngredientId": {
+        "type": "string",
+        "description": "ID of the recipe"
+      },
+      "IngredientAddById": {
+        "type": "object",
+        "required": ["title", "description"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          }
+        }
       },
       "Error": {
         "type": "object",
@@ -321,6 +425,15 @@
             "bearerAuth": []
           }
         ],
+        "type": "object",
+        "properties": {
+          "Authorization": {
+            "type": "string",
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+            "required": true
+          }
+        },
         "parameters": [
           {
             "name": "Authorization",
@@ -334,6 +447,11 @@
         "requestBody": {
           "required": true,
           "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recipe"
+              }
+            },
             "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/Recipe"
@@ -372,6 +490,14 @@
           }
         ],
         "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
           {
             "name": "recipeId",
             "in": "path",
@@ -553,6 +679,256 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/api/recipes/{id}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipe by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of the recipe to show",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RecipeId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetRecipeByID"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/ingredients/": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Get a list ingredients",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ingredients"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/": {
+      "get": {
+        "tags": ["Shopping list"],
+        "summary": "Get a list of shopping",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/add": {
+      "patch": {
+        "tags": ["Shopping list"],
+        "summary": "Add ingredient to list of shopping",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "description": "ID of the ingredient to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IngredientAddById"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/{ingredientId}": {
+      "delete": {
+        "tags": ["Shopping list"],
+        "summary": "Delete list by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "description": "ID of the ingredient to delete",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IngredientId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngredientId"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
