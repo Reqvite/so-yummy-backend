@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const bodyParser = require("body-parser");
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
@@ -10,18 +10,20 @@ const swaggerDocument = require("./swagger.json");
 
 const { authRouter } = require("./routes/api/authRouter");
 const { ownRecipesRouter } = require("./routes/api/ownRecipesRouter");
-const { popularRecipesRouter } = require("./routes/api/popularRecipeRouter");
 const {
   recipesRouter,
   ingredientsRouter,
   shoppingRouter,
   favoriteRouter,
+  popularRecipesRouter,
 } = require("./routes/api");
 
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
+app.use(bodyParser.json({ limit: "5mb" }));
+app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());

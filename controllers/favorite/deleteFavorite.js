@@ -1,17 +1,31 @@
-const { RegistrationConflictError } = require("../../helpers/errors");
+const { WrongParametersError } = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
+const { User } = require("../../models/userModel");
 
 const deleteFavoriteController = async (req, res) => {
   const { _id } = req.user;
   const { id } = req.params;
-  const isFavorite = await Recipe.findOne({ _id, id });
-  if (!isFavorite) {
-    throw RegistrationConflictError(409, "This recipe is not in favorites");
+
+  const user = await User.findOne({ _id });
+  const recipe = await Recipe.findOne({ id });
+
+  if (!recipe) {
+    throw new WrongParametersError("Recipe not found");
   }
-  await Recipe.findOneAndUpdate(id, { $unset: { favorites: _id } });
-  res.status(201).json({ message: "Deleted from favorite" });
+
+  const recipeIndex = user.favorites.indexOf(id);
+  if (recipeIndex === -1) {
+    throw new WrongParametersError("This recipe is not in your favorites");
+  }
+
+  user.favorites.splice(recipeIndex, 1);
+  recipe.favorites.splice(recipe.favorites.indexOf(_id), 1);
+
+  await Promise.all([user.save(), recipe.save()]);
+
+  res.status(200).json({ message: "Recipe removed from favorites" });
 };
 
 module.exports = {
-  deleteFavoriteController
+  deleteFavoriteController,
 };

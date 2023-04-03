@@ -1,15 +1,18 @@
-const { WrongParametersError } = require("../../helpers/errors");
-const { Recipe } = require("../../models/recipesModel");
+const { NotAuthorizideError } = require("../../helpers/errors");
+const { User } = require("../../models/userModel");
 
 const getFavoritesController = async (req, res) => {
   const { _id } = req.user;
-  const data = await Recipe.find({ favorites: _id });
-  if (!data) {
-    throw WrongParametersError(404, "Not found");
+
+  const user = await User.findOne({ _id });
+
+  if (!user) {
+    throw new NotAuthorizideError("Email or password is wrong");
   }
-  res.status(200).json(data);
+
+  res.status(200).json(user.favorites);
 };
 
 module.exports = {
-  getFavoritesController
+  getFavoritesController,
 };

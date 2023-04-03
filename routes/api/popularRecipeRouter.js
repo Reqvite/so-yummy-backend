@@ -1,8 +1,10 @@
 const express = require("express");
 const { getPopularRecipes } = require("../../controllers/recipes");
 
-const router = express.Router()
+const router = express.Router();
 
 router.get("/", getPopularRecipes);
 
-module.exports = router;
+module.exports = {
+  popularRecipesRouter: router,
+};
