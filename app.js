@@ -16,7 +16,7 @@ const {
   ingredientsRouter,
   shoppingRouter,
   favoriteRouter,
-  popularRecipesRouter,
+  popularRecipeRouter,
 } = require("./routes/api");
 
 const app = express();
@@ -33,7 +33,7 @@ app.use("/api/users", authRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/favorite", favoriteRouter);
 app.use("/api/own-recipes", ownRecipesRouter);
-app.use("/api/popular-recipe", popularRecipesRouter);
+app.use("/api/popular-recipes", popularRecipeRouter);
 app.use("/api/ingredients", ingredientsRouter);
 app.use("/api/shopping-list", shoppingRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));

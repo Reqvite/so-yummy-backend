@@ -1,7 +1,7 @@
 const { Recipe } = require("../../models/recipesModel");
 const { WrongParametersError } = require("../../helpers/errors");
 
-const getPopularRecipes = async (req, res) => {
+const getPopularRecipesController = async (req, res) => {
   const result = await Recipe.aggregate([
     {
       $project: {
@@ -17,9 +17,9 @@ const getPopularRecipes = async (req, res) => {
     { $limit: 4 },
   ]);
   if (!result) {
-    throw WrongParametersError(404, "Not found");
+    throw WrongParametersError("Not found");
   }
   res.json(result);
 };
 
-module.exports = { getPopularRecipes };
+module.exports = { getPopularRecipesController };
