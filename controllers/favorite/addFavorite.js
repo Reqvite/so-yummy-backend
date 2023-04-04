@@ -24,7 +24,9 @@ const addFavoriteController = async (req, res) => {
 
   await Promise.all([user.save(), recipe.save()]);
 
-  res.status(200).json({ message: "Recipe added to favorites" });
+  console.log(user);
+
+  res.status(200).json({ message: "Recipe added to favorites", id });
 };
 
 module.exports = {
