@@ -220,6 +220,28 @@
           }
         }
       },
+      "FavoriteList": {
+        "type": "object",
+        "required": ["title", "description", "time"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          }
+        }
+      },
+      "FavoriteId": {
+        "type": "string",
+        "description": "ID of the favorite"
+      },
       "Error": {
         "type": "object",
         "required": ["error"],
@@ -922,6 +944,172 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/IngredientId"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/favorite/": {
+      "get": {
+        "tags": ["Favorite list"],
+        "summary": "Get a favorite list of ingredients",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FavoriteList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favorite/{id}": {
+      "get": {
+        "tags": ["Favorite list"],
+        "summary": "Get favorite by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "favoriteId",
+            "in": "path",
+            "description": "ID of the favorite to show",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FavoriteId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetRecipeByID"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Favorite list"],
+        "summary": "Remove a favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of the favorite to remove",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FavoriteId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/popular-recipes/": {
+      "get": {
+        "tags": ["Popular recipes"],
+        "summary": "Get popular recipe",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recipe"
                   }
                 }
               }
