@@ -1,4 +1,4 @@
-const { getRecipesByKeywordService } = require("../../service/recipesServise");
+const { getRecipesByKeywordService } = require("../../service/recipesService");
 
 const getRecipesByKeywordController = async (req, res) => {
   const { keyword, page = 1, limit = 10 } = req.query;

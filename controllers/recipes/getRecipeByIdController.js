@@ -1,4 +1,4 @@
-const { getRecipeById } = require("../../service/recipesServise");
+const { getRecipeById } = require("../../service/recipesService");
 
 async function getRecipeByIdController(req, res) {
   const { id } = req.params;
