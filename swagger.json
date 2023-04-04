@@ -251,6 +251,83 @@
             "description": "Error message"
           }
         }
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the subscriber",
+            "example": "john@example.com"
+          },
+          "plan": {
+            "type": "string",
+            "description": "Subscription plan",
+            "example": "basic"
+          }
+        }
+      },
+      "SubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Subscription ID",
+            "example": 1234
+          },
+          "email": {
+            "type": "string",
+            "description": "Email address of the subscriber",
+            "example": "john@example.com"
+          },
+          "plan": {
+            "type": "string",
+            "description": "Subscription plan",
+            "example": "basic"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Item ID",
+            "example": 1234
+          },
+          "name": {
+            "type": "string",
+            "description": "Item name",
+            "example": "Product A"
+          },
+          "category": {
+            "type": "string",
+            "description": "Item category",
+            "example": "Electronics"
+          },
+          "price": {
+            "type": "number",
+            "description": "Item price",
+            "example": 99.99
+          }
+        }
+      },
+      "SearchResults": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of search results",
+            "example": 25
+          },
+          "items": {
+            "type": "array",
+            "description": "List of search results",
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            }
+          }
+        }
       }
     }
   },
@@ -1117,6 +1194,133 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/subscribe": {
+      "post": {
+        "tags": ["Subscribe"],
+        "summary": "Subscribe to the our service",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "description": "Allows a user to subscribe to the service",
+        "operationId": "subscribeUser",
+        "requestBody": {
+          "description": "Subscription details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subscription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Subscription successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "tags": ["Search"],
+        "summary": "Search recipes for items",
+        "description": "Allows a user to search for items based on various criteria",
+        "operationId": "searchItems",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Item category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
