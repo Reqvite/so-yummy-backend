@@ -1007,9 +1007,9 @@
       }
     },
     "/api/favorite/{id}": {
-      "get": {
+      "post": {
         "tags": ["Favorite list"],
-        "summary": "Get favorite by ID",
+        "summary": "Add to favorite by ID",
         "description": "Retrieve the category page for the specified category.",
         "parameters": [
           {
@@ -1023,7 +1023,7 @@
           {
             "name": "favoriteId",
             "in": "path",
-            "description": "ID of the favorite to show",
+            "description": "ID of the favorite to post",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/FavoriteId"
@@ -1051,7 +1051,7 @@
       },
       "delete": {
         "tags": ["Favorite list"],
-        "summary": "Remove a favorite",
+        "summary": "Remove the favorite",
         "security": [
           {
             "bearerAuth": []
