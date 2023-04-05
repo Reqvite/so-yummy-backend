@@ -1,9 +1,9 @@
-const { getRecipesByKeywordService } = require("../../service/recipesServise");
+const { getRecipesByKeyword } = require("../../service/recipesService");
 
 const getRecipesByKeywordController = async (req, res) => {
   const { keyword, page = 1, limit = 10 } = req.query;
 
-  const { results, count } = await getRecipesByKeywordService(
+  const { results, count } = await getRecipesByKeyword(
     keyword,
     page,
     limit

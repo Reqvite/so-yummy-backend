@@ -5,6 +5,9 @@ const { getRecipesController } = require("./getRecipesController");
 const {
   getRecipesByKeywordController,
 } = require("./getRecipesByKeywordController");
+const {
+  getRecipesByIngredientController,
+} = require("./getRecipesByIngredientController");
 
 const {
   getPopularRecipesController,
@@ -16,5 +19,6 @@ module.exports = {
   getCategoryPageController,
   getRecipeByIdController,
   getRecipesByKeywordController,
+  getRecipesByIngredientController,
   getPopularRecipesController,
 };
