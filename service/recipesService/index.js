@@ -1,11 +1,13 @@
 const { getCategories } = require("./getCategoryList");
 const { getCategoryPage } = require("./getCategoryPage");
 const { getRecipeById } = require("./getRecipeById");
-const { getRecipesByKeywordService } = require("./getRecipesByKeywordService");
+const { getRecipesByKeyword } = require("./getRecipesByKeyword");
+const { getRecipesByIngredient } = require("./getRecipesByIngredient");
 
 module.exports = {
   getCategories,
   getCategoryPage,
   getRecipeById,
-  getRecipesByKeywordService,
+  getRecipesByKeyword,
+  getRecipesByIngredient
 };
