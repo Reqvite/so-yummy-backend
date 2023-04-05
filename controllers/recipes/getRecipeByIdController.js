@@ -1,5 +1,4 @@
 const { Recipe } = require("../../models/recipesModel");
-const { getRecipeById } = require("../../service/recipesServise");
 const { ObjectId } = require("mongodb");
 
 async function getRecipeByIdController(req, res) {
