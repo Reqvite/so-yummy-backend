@@ -15,6 +15,7 @@ const registration = async (name, email, password) => {
       password,
       avatarURL,
       subscribeCode,
+      subscribe: true,
     });
 
     await user.save();
