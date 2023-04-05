@@ -1,12 +1,12 @@
 const { RegistrationConflictError } = require("../../helpers/errors");
 const { User } = require("../../models/userModel");
 const gravatar = require("gravatar");
-const { uuid } = require("uuidv4");
-const { sendEmail } = require("../../helpers/sendEmail");
+// const { uuid } = require("uuidv4");
+// const { sendEmail } = require("../../helpers/sendEmail");
 
 const registration = async (name, email, password) => {
   const avatarURL = gravatar.url(email);
-  const subscribeCode = uuid();
+  // const subscribeCode = uuid();
 
   try {
     const user = new User({
@@ -14,24 +14,24 @@ const registration = async (name, email, password) => {
       email,
       password,
       avatarURL,
-      subscribeCode,
+      // subscribeCode,
     });
 
     await user.save();
 
-    const subscribeEmail = {
-      to: email,
-      subject: "Please choose our subscribe",
-      html: `<h3>Hey everyone, welcome back to our website. Don't forget to click Subscribe if you want more weekly updates our recipes.</h3>`,
-    };
+    // const subscribeEmail = {
+    //   to: email,
+    //   subject: "Please choose our subscribe",
+    //   html: `<h3>Hey everyone, welcome back to our website. Don't forget to click Subscribe if you want more weekly updates our recipes.</h3>`,
+    // };
 
-    await sendEmail(subscribeEmail);
+    // await sendEmail(subscribeEmail);
 
     return {
       email: user.email,
     };
   } catch (err) {
-    throw new RegistrationConflictError("Email in use");
+    throw new RegistrationConflictError(err.message);
   }
 };
 
