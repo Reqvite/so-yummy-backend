@@ -6,9 +6,9 @@ const { User } = require("../../models/userModel");
 const login = async (email, password) => {
   const user = await User.findOne({ email });
 
-  if (!user.subscribe) {
-    throw new NotAuthorizideError("Email not subscribed");
-  }
+  // if (!user.subscribe) {
+  //   throw new NotAuthorizideError("Email not subscribed");
+  // }
 
   if (!user) {
     throw new NotAuthorizideError("Email or password is wrong");
