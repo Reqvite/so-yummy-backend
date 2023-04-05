@@ -32,6 +32,14 @@ const userSchema = new mongoose.Schema(
       type: Array,
       default: [],
     },
+    subscribe: {
+      type: Boolean,
+      default: false,
+    },
+    subscribeCode: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );
