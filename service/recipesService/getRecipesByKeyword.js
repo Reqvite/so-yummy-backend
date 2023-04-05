@@ -1,7 +1,7 @@
 const { Recipe } = require("../../models/recipesModel");
 const { WrongParametersError } = require("../../helpers/errors");
 
-const getRecipesByKeywordService = async (keyword, page, limit) => {
+const getRecipesByKeyword = async (keyword, page, limit) => {
   const recipes = await Recipe.find(
     { title: { $regex: keyword, $options: "i" } },
     null,
@@ -24,5 +24,5 @@ const getRecipesByKeywordService = async (keyword, page, limit) => {
 };
 
 module.exports = {
-  getRecipesByKeywordService,
+  getRecipesByKeyword,
 };

@@ -1,10 +1,13 @@
 const { default: mongoose } = require("mongoose");
-const { WrongParametersError } = require("../../helpers/errors");
+const {
+  WrongParametersError,
+  ValidationError,
+} = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
 
 const getRecipeById = async (id) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    throw new WrongParametersError(`Invalid recipe id=${id}`);
+    throw new ValidationError,(`Invalid recipe id=${id}`);
   }
 
   const recipe = await Recipe.findById(id);
