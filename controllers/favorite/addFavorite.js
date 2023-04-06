@@ -26,7 +26,7 @@ const addFavoriteController = async (req, res) => {
 
   console.log(user);
 
-  res.status(200).json({ message: "Recipe added to favorites", id });
+  res.status(200).json({ message: "Recipe added to favorites", recipe });
 };
 
 module.exports = {
