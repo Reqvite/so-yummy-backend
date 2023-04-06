@@ -782,7 +782,7 @@
         }
       }
     },
-    "/api/recipes/{id}": {
+    "/api/recipes/recipe/{id}": {
       "get": {
         "tags": ["Recipes"],
         "summary": "Get recipe by ID",
@@ -1249,7 +1249,7 @@
         }
       }
     },
-    "/api/search": {
+    "/api/recipes/search": {
       "get": {
         "tags": ["Search"],
         "summary": "Search recipes for items",

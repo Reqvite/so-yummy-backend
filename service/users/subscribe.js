@@ -3,7 +3,7 @@ const { sendEmail } = require("../../helpers/sendEmail");
 const { User } = require("../../models/userModel");
 
 const subscribe = async (email) => {
-  const user = await User.findOne({ email, subscribe: false });
+  const user = await User.findOne({ email });
 
   const subscribeEmail = {
     to: email,
@@ -18,7 +18,13 @@ const subscribe = async (email) => {
   if (!user) {
     throw new Error(401, "Email not found");
   }
-
+  await User.findByIdAndUpdate(user._id, {
+    subscribe: true,
+  });
+  if (user.subscribe) {
+    throw new Error(401, "User was already subscribed!");
+  }
+  console.log(user.subscribe);
   await sendEmail(subscribeEmail);
 };
 

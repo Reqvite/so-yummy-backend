@@ -36,10 +36,6 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    subscribeCode: {
-      type: String,
-      default: "",
-    },
   },
   { timestamps: true }
 );
