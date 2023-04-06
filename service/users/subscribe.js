@@ -12,17 +12,17 @@ const subscribe = async (email) => {
   };
 
   if (!email) {
-    throw new Error(400, "Missing required field email");
+    throw new Error("Missing required field email");
   }
 
   if (!user) {
-    throw new Error(401, "Email not found");
+    throw new Error("Email not found");
   }
   await User.findByIdAndUpdate(user._id, {
     subscribe: true,
   });
   if (user.subscribe) {
-    throw new Error(401, "User was already subscribed!");
+    throw new Error("User was already subscribed!");
   }
   console.log(user.subscribe);
   await sendEmail(subscribeEmail);
