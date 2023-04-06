@@ -1,9 +1,9 @@
 const { Recipe } = require("../../models/recipesModel");
 const { WrongParametersError } = require("../../helpers/errors");
 
-const getRecipesByKeyword = async (keyword, page, limit) => {
+const getRecipesByKeyword = async (query, page, limit) => {
   const recipes = await Recipe.find(
-    { title: { $regex: keyword, $options: "i" } },
+    { title: { $regex: query, $options: "i" } },
     null,
     {
       sort: { popularity: -1 },
@@ -13,7 +13,7 @@ const getRecipesByKeyword = async (keyword, page, limit) => {
   );
 
   const count = await Recipe.countDocuments({
-    title: { $regex: keyword, $options: "i" },
+    title: { $regex: query, $options: "i" },
   });
 
   if (count === 0) {
