@@ -1,8 +1,8 @@
 const { WrongParametersError } = require("../../helpers/errors");
-const { OwnRecipe } = require("../../models/ownRecipeModel");
+const { Recipe } = require("../../models/recipesModel");
 
 const removeOwnRecipe = async (recipeId, _id) => {
-  const recipe = await OwnRecipe.findById(recipeId);
+  const recipe = await Recipe.findById(recipeId);
 
   if (!recipe) {
     throw new WrongParametersError(`Not found`);

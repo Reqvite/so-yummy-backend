@@ -1,7 +1,7 @@
-const { OwnRecipe } = require("../../models/ownRecipeModel");
+const { Recipe } = require("../../models/recipesModel");
 
 const getOwnRecipes = async (_id) => {
-  const recipes = await OwnRecipe.find({ owner: _id });
+  const recipes = await Recipe.find({ owner: _id });
   return recipes;
 };
 
