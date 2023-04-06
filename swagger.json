@@ -259,31 +259,16 @@
             "type": "string",
             "description": "Email address of the subscriber",
             "example": "john@example.com"
-          },
-          "plan": {
-            "type": "string",
-            "description": "Subscription plan",
-            "example": "basic"
           }
         }
       },
       "SubscriptionResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "integer",
-            "description": "Subscription ID",
-            "example": 1234
-          },
           "email": {
             "type": "string",
             "description": "Email address of the subscriber",
             "example": "john@example.com"
-          },
-          "plan": {
-            "type": "string",
-            "description": "Subscription plan",
-            "example": "basic"
           }
         }
       },
@@ -617,6 +602,82 @@
         }
       }
     },
+    "/api/recipes/search": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Search recipes for items",
+        "description": "Allows a user to search for items based on various criteria",
+        "operationId": "searchItems",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Item category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
     "/api/recipes/main-page": {
       "get": {
         "tags": ["Recipes"],
@@ -822,6 +883,52 @@
           },
           "401": {
             "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/recipes/search/ingredient": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipes by ingredient",
+        "description": "Returns a list of recipes that contain the given ingredient.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "ingredients": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1233,82 +1340,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/SubscriptionResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server error"
-          }
-        }
-      }
-    },
-    "/api/recipes/search": {
-      "get": {
-        "tags": ["Search"],
-        "summary": "Search recipes for items",
-        "description": "Allows a user to search for items based on various criteria",
-        "operationId": "searchItems",
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "description": "Access token",
-            "required": true,
-            "type": "string",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
-          },
-          {
-            "name": "query",
-            "in": "query",
-            "description": "Search query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "category",
-            "in": "query",
-            "description": "Item category",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "sort",
-            "in": "query",
-            "description": "Sort order",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Maximum number of results to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "default": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search results",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SearchResults"
                 }
               }
             }
