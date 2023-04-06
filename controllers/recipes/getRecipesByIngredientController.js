@@ -27,7 +27,7 @@ async function getRecipesByIngredientController(req, res) {
       );
     }
 
-    return res.status(200).json({ count, recipes, currentPage });
+    return res.status(200).json([{ count, recipes, currentPage }]);
   } catch (error) {
     console.error(error);
     if (error instanceof RestApiError) {

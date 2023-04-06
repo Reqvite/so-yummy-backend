@@ -23,7 +23,7 @@ const deleteFavoriteController = async (req, res) => {
 
   await Promise.all([user.save(), recipe.save()]);
 
-  res.status(200).json({ message: "Recipe removed from favorites" });
+  res.status(200).json({ message: "Recipe removed from favorites", id });
 };
 
 module.exports = {
