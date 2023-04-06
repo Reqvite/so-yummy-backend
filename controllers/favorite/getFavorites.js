@@ -1,4 +1,5 @@
 const { NotAuthorizideError } = require("../../helpers/errors");
+const { Recipe } = require("../../models/recipesModel");
 const { User } = require("../../models/userModel");
 
 const getFavoritesController = async (req, res) => {
@@ -10,7 +11,11 @@ const getFavoritesController = async (req, res) => {
     throw new NotAuthorizideError("Email or password is wrong");
   }
 
-  res.status(200).json(user.favorites);
+  const favoriteRecipes = await Recipe.find({
+    _id: { $in: user.favorites },
+  });
+
+  res.status(200).json(favoriteRecipes);
 };
 
 module.exports = {
