@@ -5,7 +5,7 @@ const subscribeController = async (req, res) => {
 
   const user = await subscribe(email);
 
-  res.status(201).json({ status: "Sended", code: 201, user });
+  res.status(201).json({ status: "Sending was successful", code: 201, user });
 };
 
 module.exports = { subscribeController };
