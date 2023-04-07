@@ -23,8 +23,6 @@ const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-app.use(bodyParser.json({ limit: "5mb" }));
-app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(bodyParser.json({ limit: "5mb" }));
