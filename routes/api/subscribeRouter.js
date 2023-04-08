@@ -7,7 +7,7 @@ const {
 
 const router = express.Router();
 
-router.post("/", asyncWrapper(subscribeController));
+router.post("/", authMiddleware, asyncWrapper(subscribeController));
 
 module.exports = {
   subscribeRouter: router,
