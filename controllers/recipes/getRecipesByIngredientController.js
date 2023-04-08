@@ -5,7 +5,7 @@ const {
   WrongParametersError,
 } = require("../../helpers/errors");
 
-async function getRecipesByIngredientController(req, res) {
+const getRecipesByIngredientController = async (req, res) => {
   try {
     const { ingredient, page, limit } = req.query;
 
@@ -39,7 +39,7 @@ async function getRecipesByIngredientController(req, res) {
       .status(500)
       .json({ message: "Error fetching recipes by ingredient" });
   }
-}
+};
 
 module.exports = {
   getRecipesByIngredientController,

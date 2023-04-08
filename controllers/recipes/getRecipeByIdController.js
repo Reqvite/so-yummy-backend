@@ -1,7 +1,7 @@
 const { Recipe } = require("../../models/recipesModel");
 const { ObjectId } = require("mongodb");
 
-async function getRecipeByIdController(req, res) {
+const getRecipeByIdController = async (req, res) => {
   const { id } = req.params;
 
   const recipe = await Recipe.aggregate([
@@ -46,7 +46,7 @@ async function getRecipeByIdController(req, res) {
   ]);
 
   return res.json(recipe[0]);
-}
+};
 
 module.exports = {
   getRecipeByIdController,
