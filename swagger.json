@@ -1,0 +1,1360 @@
+{
+  "openapi": "3.0.3",
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "info": {
+    "version": "7.7.7",
+    "title": "So Yummy"
+  },
+  "tags": [
+    {
+      "name": "User"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserSignUp": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "format": "name"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "email@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "UserLogin": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "email@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        }
+      },
+      "UserUpdate": {
+        "type": "object",
+        "required": ["name", "email"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Bob"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "email@gmail.com"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "Recipe": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Name of the recipe"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category the recipe"
+          },
+          "time": {
+            "type": "number",
+            "description": "Time cooking of the recipe"
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "Array ingredients of the recipe"
+          },
+          "instruction": {
+            "type": "string",
+            "description": "Instruction for cooking the recipe"
+          },
+          "avatar": {
+            "type": "string",
+            "format": "binary"
+          }
+        },
+        "required": ["title", "description", "category", "time", "instruction"]
+      },
+      "MainRecipe": {
+        "type": "object",
+        "required": ["title", "description", "category", "time", "instruction"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the recipe"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the recipe"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          },
+          "ingredients": {
+            "type": "array"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instruction how to cooking the recipe"
+          }
+        }
+      },
+      "CategoryListRecipes": {
+        "type": "array",
+        "properties": {
+          "list": {}
+        }
+      },
+      "RecipeId": {
+        "type": "string",
+        "description": "ID of the recipe"
+      },
+      "GetRecipeByID": {
+        "type": "object",
+        "required": ["title", "description", "category", "time", "instruction"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the recipe"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the recipe"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category of the recipe"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          },
+          "ingredients": {
+            "type": "array"
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Instruction how to cooking the recipe"
+          }
+        }
+      },
+      "Ingredients": {
+        "type": "object",
+        "required": ["title", "description", "time"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          }
+        }
+      },
+      "ShoppingList": {
+        "type": "array",
+        "properties": {
+          "list": {}
+        }
+      },
+      "IngredientId": {
+        "type": "string",
+        "description": "ID of the recipe"
+      },
+      "IngredientAddById": {
+        "type": "object",
+        "required": ["title", "description"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          }
+        }
+      },
+      "FavoriteList": {
+        "type": "object",
+        "required": ["title", "description", "time"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Title of the ingredient"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the ingredient"
+          },
+          "time": {
+            "type": "number",
+            "example": "90"
+          }
+        }
+      },
+      "FavoriteId": {
+        "type": "string",
+        "description": "ID of the favorite"
+      },
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message"
+          }
+        }
+      },
+      "Subscription": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the subscriber",
+            "example": "john@example.com"
+          }
+        }
+      },
+      "SubscriptionResponse": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the subscriber",
+            "example": "john@example.com"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Item ID",
+            "example": 1234
+          },
+          "name": {
+            "type": "string",
+            "description": "Item name",
+            "example": "Product A"
+          },
+          "category": {
+            "type": "string",
+            "description": "Item category",
+            "example": "Electronics"
+          },
+          "price": {
+            "type": "number",
+            "description": "Item price",
+            "example": 99.99
+          }
+        }
+      },
+      "SearchResults": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Total number of search results",
+            "example": 25
+          },
+          "items": {
+            "type": "array",
+            "description": "List of search results",
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Creates a new user",
+        "requestBody": {
+          "description": "User object that needs to be added",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserSignUp"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully"
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Logs in a user",
+        "requestBody": {
+          "description": "User object that needs to log in",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Logs out a user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Logout",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully"
+          }
+        }
+      }
+    },
+    "/api/users/current": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Gets the current user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users/update": {
+      "patch": {
+        "tags": ["User"],
+        "summary": "Updates the current user",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "requestBody": {
+          "description": "User object that needs to be updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          }
+        }
+      }
+    },
+
+    "/api/own-recipes/": {
+      "get": {
+        "tags": ["Own-Recipes"],
+        "summary": "Get own recipes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recipe"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/own-recipes/add": {
+      "post": {
+        "tags": ["Own-Recipes"],
+        "summary": "Add a recipe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "type": "object",
+        "properties": {
+          "Authorization": {
+            "type": "string",
+            "description": "Access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+            "required": true
+          }
+        },
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Recipe"
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Recipe"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeId"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+
+    "/api/own-recipes/{recipeId}": {
+      "delete": {
+        "tags": ["Own-Recipes"],
+        "summary": "Remove a recipe",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of the recipe to remove",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RecipeId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/recipes/search": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Search recipes for items",
+        "description": "Allows a user to search for items based on various criteria",
+        "operationId": "searchItems",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Search query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "Item category",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Sort order",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Maximum number of results to return",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    },
+    "/api/recipes/main-page": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get a list of recipes",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MainRecipe"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recipes/category-list": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get a list recipes category",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoryListRecipes"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recipes/{category}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get category page",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "path",
+            "description": "The category of the page to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "example": {
+                  "page": {
+                    "title": "Category Page",
+                    "category": "recipes",
+                    "products": [
+                      {
+                        "name": "Recipe 1",
+                        "description": "Recipe 1 description"
+                      },
+                      {
+                        "name": "Recipe 2",
+                        "description": "Recipe 2 description"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid category"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Category page not found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/recipes/recipe/{id}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipe by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of the recipe to show",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/RecipeId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetRecipeByID"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/recipes/search/ingredient": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Get recipes by ingredient",
+        "description": "Returns a list of recipes that contain the given ingredient.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "ingredients": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ingredients/": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Get a list ingredients",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ingredients"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/": {
+      "get": {
+        "tags": ["Shopping list"],
+        "summary": "Get a list of shopping",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/add": {
+      "patch": {
+        "tags": ["Shopping list"],
+        "summary": "Add ingredient to list of shopping",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "description": "ID of the ingredient to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IngredientAddById"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ShoppingList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/shopping-list/{ingredientId}": {
+      "delete": {
+        "tags": ["Shopping list"],
+        "summary": "Delete list by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "ingredientId",
+            "in": "path",
+            "description": "ID of the ingredient to delete",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/IngredientId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/IngredientId"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/favorite/": {
+      "get": {
+        "tags": ["Favorite list"],
+        "summary": "Get a favorite list of ingredients",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FavoriteList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favorite/{id}": {
+      "post": {
+        "tags": ["Favorite list"],
+        "summary": "Add to favorite by ID",
+        "description": "Retrieve the category page for the specified category.",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "favoriteId",
+            "in": "path",
+            "description": "ID of the favorite to post",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FavoriteId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetRecipeByID"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Favorite list"],
+        "summary": "Remove the favorite",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          },
+          {
+            "name": "recipeId",
+            "in": "path",
+            "description": "ID of the favorite to remove",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/FavoriteId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/popular-recipes/": {
+      "get": {
+        "tags": ["Popular recipes"],
+        "summary": "Get popular recipe",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Recipe"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/api/subscribe": {
+      "post": {
+        "tags": ["Subscribe"],
+        "summary": "Subscribe to the our service",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "Access token",
+            "required": true,
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+          }
+        ],
+        "description": "Allows a user to subscribe to the service",
+        "operationId": "subscribeUser",
+        "requestBody": {
+          "description": "Subscription details",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Subscription"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Subscription successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      }
+    }
+  }
+}

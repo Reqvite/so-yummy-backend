@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Password is required"],
+      required: [true, "Name is required"],
     },
     password: {
       type: String,
@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema(
     shoppingList: {
       type: Array,
       default: [],
+    },
+    favorites: {
+      type: Array,
+      default: [],
+    },
+    subscribe: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

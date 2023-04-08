@@ -1,4 +1,4 @@
-const { getCategoryPage } = require("../../service/recipesServise");
+const { getCategoryPage } = require("../../service/recipesService");
 
 const getCategoryPageController = async (req, res) => {
   const { category } = req.params;

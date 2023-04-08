@@ -13,7 +13,7 @@ const removeIngredient = async (ingredientId, _id) => {
   );
 
   if (ingredientIndex === -1) {
-    throw new WrongParametersError(`Not found`);
+    throw new WrongParametersError(`This ingredient already deleted.`);
   }
 
   await User.findByIdAndUpdate(
