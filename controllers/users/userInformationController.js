@@ -1,4 +1,4 @@
-const { getUserInformation } = require("../../service/users/getUserInformation");
+const { getUserInformation } = require("../../service/users");
 
 async function userInformationController(req, res) {
   const { id } = req.params;
