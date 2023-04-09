@@ -1,7 +1,7 @@
 const { getUserInformation } = require("../../service/users");
 
 async function userInformationController(req, res) {
-  const { id } = req.params;
+  const { id } = req.user;
 
   const userInformation = await getUserInformation(id);
 
