@@ -22,6 +22,10 @@ const recipeSchema = Schema(
       type: Array,
       default: [],
     },
+    thumb: {
+      type: String,
+      required: [true, "thumb is required"],
+    },
     preview: {
       type: String,
       required: [true, "preview is required"],
