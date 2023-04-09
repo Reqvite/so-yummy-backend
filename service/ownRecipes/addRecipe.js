@@ -1,6 +1,7 @@
 const { Recipe } = require("../../models/recipesModel");
 
 const addRecipe = async (
+  thumb,
   title,
   description,
   category,
@@ -8,9 +9,10 @@ const addRecipe = async (
   ingredients,
   preview,
   instructions,
-  _id
+  owner
 ) => {
   const ownRecipe = new Recipe({
+    thumb,
     title,
     description,
     category,
@@ -18,7 +20,7 @@ const addRecipe = async (
     ingredients,
     preview,
     instructions,
-    owner: _id,
+    owner,
   });
   await ownRecipe.save();
   return ownRecipe;
