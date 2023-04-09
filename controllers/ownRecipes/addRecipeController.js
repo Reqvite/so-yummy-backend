@@ -16,7 +16,9 @@ const addRecipeController = async (req, res) => {
 
   const { url: preview } = await cloudinary.uploader.upload(image);
 
+  const thumb = preview;
   const recipe = await addRecipe(
+    thumb,
     title,
     description,
     category,
