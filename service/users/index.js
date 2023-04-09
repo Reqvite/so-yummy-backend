@@ -1,4 +1,4 @@
-const { getUserInformation } = require("./getUserInformation");
+const { getUserInformation } = require("./userInformation");
 
 module.exports = {
   getUserInformation,
