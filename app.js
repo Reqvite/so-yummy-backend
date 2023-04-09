@@ -17,6 +17,7 @@ const {
   favoriteRouter,
   popularRecipesRouter,
   subscribeRouter,
+  userInformationRouter,
 } = require("./routes/api");
 
 const app = express();
@@ -30,6 +31,7 @@ app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
 app.use("/api/users", authRouter);
+app.use("/api/information", userInformationRouter);
 app.use("/api/recipes", recipesRouter);
 app.use("/api/favorite", favoriteRouter);
 app.use("/api/own-recipes", ownRecipesRouter);
