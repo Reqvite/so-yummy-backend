@@ -22,9 +22,9 @@ const subscribe = async (email) => {
     subscribe: true,
   });
   if (user.subscribe) {
-    throw new Error("User was already subscribed!");
+    throw new Error("You are already subscribed to the newsletter.");
   }
-  console.log(user.subscribe);
+
   await sendEmail(subscribeEmail);
 };
 
