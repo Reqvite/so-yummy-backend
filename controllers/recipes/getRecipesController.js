@@ -6,13 +6,8 @@ const getRecipesController = async (req, res) => {
 };
 
 const sortRecipes = (arr) => {
-  let list = {};
+  let list = { Breakfast: [], Miscellaneous: [], Chicken: [], Dessert: [] };
   arr.forEach((item) => {
-    if (!list[item.category]) {
-      if (Object.keys(list).length < 4) {
-        list[item.category] = [];
-      }
-    }
     if (list[item.category] && list[item.category].length < 4) {
       list[item.category].push(item);
     }
