@@ -1,7 +1,7 @@
 const { Recipe } = require("../../models/recipesModel");
 const { Ingredient } = require("../../models/ingredientModel");
 
-async function findRecipesByIngredients(ingredientIds, limit, skip) {
+const findRecipesByIngredients = async (ingredientIds, limit, skip) => {
   const count = await Recipe.countDocuments({
     ingredients: {
       $elemMatch: { id: { $in: ingredientIds } },
@@ -19,9 +19,9 @@ async function findRecipesByIngredients(ingredientIds, limit, skip) {
     .exec();
 
   return { count, recipes };
-}
+};
 
-async function getRecipesByIngredient(titlePart, page = 1, limit = 10) {
+const getRecipesByIngredient = async (titlePart, page = 1, limit = 10) => {
   const skip = (page - 1) * limit;
 
   const ingredients = await Ingredient.find({
@@ -37,7 +37,7 @@ async function getRecipesByIngredient(titlePart, page = 1, limit = 10) {
   );
 
   return { count, recipes, page };
-}
+};
 
 module.exports = {
   getRecipesByIngredient,

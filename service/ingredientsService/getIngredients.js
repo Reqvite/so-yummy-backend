@@ -1,9 +1,9 @@
 const { Ingredient } = require("../../models/ingredientModel");
 
-async function getIngredients() {
+const getIngredients = async () => {
   const ingredient = await Ingredient.find({});
   return ingredient;
-}
+};
 
 module.exports = {
   getIngredients,
