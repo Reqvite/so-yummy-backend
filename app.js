@@ -6,11 +6,9 @@ const cors = require("cors");
 const { errorHandler } = require("./helpers/apiHelpers");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
-
-const { authRouter } = require("./routes/api/authRouter");
-const { ownRecipesRouter } = require("./routes/api/ownRecipesRouter");
-
 const {
+  authRouter,
+  ownRecipesRouter,
   recipesRouter,
   ingredientsRouter,
   shoppingRouter,

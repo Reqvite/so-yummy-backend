@@ -1,4 +1,4 @@
-const { currentUser } = require("../../service/users/currentUser");
+const { currentUser } = require("../../service/users");
 
 const currentUserController = async (req, res) => {
   const user = await currentUser(req.user.token);
