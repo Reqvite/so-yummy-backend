@@ -7,7 +7,7 @@ const {
 
 const getRecipesByIngredientController = async (req, res) => {
   try {
-    const { ingredient, page, limit } = req.query;
+    const { ingredient, page = 1, limit = 10 } = req.query;
 
     if (!ingredient) {
       throw new ValidationError(
@@ -21,13 +21,17 @@ const getRecipesByIngredientController = async (req, res) => {
       page: currentPage,
     } = await getRecipesByIngredient(ingredient, page, limit);
 
+    console.log(count);
+    console.log(limit);
+    const totalPages = Math.ceil(count / limit);
+
     if (count === 0) {
       throw new WrongParametersError(
         `No ingredient found with name containing '${ingredient}'`
       );
     }
 
-    return res.status(200).json({ count, recipes, currentPage });
+    return res.status(200).json({ count, recipes, currentPage, totalPages });
   } catch (error) {
     console.error(error);
     if (error instanceof RestApiError) {
