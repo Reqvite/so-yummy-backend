@@ -1,4 +1,4 @@
-const { subscribe } = require("../../service/users/subscribe");
+const { subscribe } = require("../../service/users");
 
 const subscribeController = async (req, res) => {
   const { email } = req.body;
