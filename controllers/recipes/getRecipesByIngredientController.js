@@ -21,8 +21,6 @@ const getRecipesByIngredientController = async (req, res) => {
       page: currentPage,
     } = await getRecipesByIngredient(ingredient, page, limit);
 
-    console.log(count);
-    console.log(limit);
     const totalPages = Math.ceil(count / limit);
 
     if (count === 0) {
@@ -33,7 +31,6 @@ const getRecipesByIngredientController = async (req, res) => {
 
     return res.status(200).json({ count, recipes, currentPage, totalPages });
   } catch (error) {
-    console.error(error);
     if (error instanceof RestApiError) {
       return res
         .status(error.status)
