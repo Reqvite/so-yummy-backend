@@ -4,17 +4,24 @@ const { User } = require("../../models/userModel");
 const getShoppingList = async (_id) => {
   const { shoppingList } = await User.findById(_id);
 
-  const ingredientIds = shoppingList.map(({ id }) => id);
+  const ingredients = await Ingredient.find({});
 
-  const ingredients = await Ingredient.find({ _id: { $in: ingredientIds } });
+  const updatedShoppingList = shoppingList.map((recipe) => {
+    const updatedIngredients = recipe.ingredients.map((ingredient) => {
+      const ingredientDetails = ingredients.find(({ _id }) =>
+        _id.equals(ingredient.id)
+      );
+      return {
+        ...ingredient,
+        ttl: ingredientDetails.ttl,
+        thb: ingredientDetails.thb,
+      };
+    });
 
-  const shoppingListWithMeasures = ingredients.map((ingredient) => {
-    const { id } = ingredient;
-    const { measure } = shoppingList.find((item) => item.id === id);
-    return { ...ingredient.toObject(), measure };
+    return { ...recipe, ingredients: updatedIngredients };
   });
 
-  return shoppingListWithMeasures;
+  return updatedShoppingList;
 };
 
 module.exports = {

@@ -23,18 +23,40 @@ const addIngredient = async (recipeId, ingredientId, _id) => {
     throw new WrongParametersError(`Ingredient not found`);
   }
 
-  const ingredientAlreadyExists = user.shoppingList.some(
-    ({ id }) => id.toString() === ingredient.id.toString()
+  const newRecipeId = recipeId;
+  const recipeAlreadyExists = user.shoppingList.find(
+    ({ recipeId }) => recipeId === newRecipeId
   );
 
-  if (!ingredientAlreadyExists) {
-    user.shoppingList.push({
-      id: ingredient.id.toString(),
-      measure: ingredient.measure,
-    });
+  if (recipeAlreadyExists) {
+    const ingredientAlreadyExists = recipeAlreadyExists.ingredients.some(
+      ({ id }) => id.toString() === ingredient.id.toString()
+    );
+    if (!ingredientAlreadyExists) {
+      recipeAlreadyExists.ingredients.push({
+        id: ingredient.id.toString(),
+        measure: ingredient.measure,
+      });
 
-    await user.save();
+      const idx = user.shoppingList.findIndex(
+        ({ recipeId }) => recipeId === newRecipeId
+      );
+      user.shoppingList.splice(idx, 1);
+      user.shoppingList.push(recipeAlreadyExists);
+    } else {
+      throw new WrongParametersError(`Ingredient already added`);
+    }
+  } else {
+    user.shoppingList.push({
+      recipeId,
+      recipeTitle: recipe.title,
+      ingredients: [
+        { id: ingredient.id.toString(), measure: ingredient.measure },
+      ],
+    });
   }
+
+  await user.save();
 
   return user.shoppingList;
 };

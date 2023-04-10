@@ -11,7 +11,7 @@ const router = express.Router();
 router.get("/", authMiddleware, asyncWrapper(getShoppingListController));
 router.patch("/add", authMiddleware, asyncWrapper(addIngredientController));
 router.delete(
-  "/:ingredientId",
+  "/:ingredientId/:recipeId",
   authMiddleware,
   asyncWrapper(removeIngredientController)
 );
