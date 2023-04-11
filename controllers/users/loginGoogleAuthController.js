@@ -2,6 +2,7 @@ const { NotAuthorizideError } = require("../../helpers/errors");
 const { User } = require("../../models/userModel");
 const loginGoogleAuthController = async (req, res) => {
   const { token } = req.params;
+
   if (!token) {
     throw new NotAuthorizideError("Not Authorizide");
   }

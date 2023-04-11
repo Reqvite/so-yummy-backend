@@ -10,15 +10,13 @@ const oauth2Client = new OAuth2(
   }
 );
 
-const scopes = [
-  "https://www.googleapis.com/auth/userinfo.email",
-  "https://www.googleapis.com/auth/userinfo.profile",
-];
-
-const googleAuthRedirectController = (req, res) => {
-  const authUrl = oauth2Client.generateAuthUrl({
+const googleAuthRedirectController = async (req, res) => {
+  const authUrl = await oauth2Client.generateAuthUrl({
     access_type: "offline",
-    scope: scopes,
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+    ],
   });
 
   res.redirect(authUrl);
