@@ -7,6 +7,7 @@ const {
   updateUserController,
   googleAuthRedirectController,
   loginGoogleAuthController,
+  googleAuthCallbackController,
 } = require("../../controllers/users");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
@@ -35,6 +36,7 @@ router.patch(
 );
 router.get("/auth/google", asyncWrapper(googleAuthRedirectController));
 router.get("/:token", asyncWrapper(loginGoogleAuthController));
+router.get("/auth/google/callback", asyncWrapper(googleAuthCallbackController));
 
 module.exports = {
   authRouter: router,
