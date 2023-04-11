@@ -51,7 +51,7 @@ const googleAuthCallbackController = async (req, res) => {
     await User.findByIdAndUpdate(id, {
       $set: { token },
     });
-    res.redirect(`http://localhost:3001/?auth=${token}`);
+    res.redirect(`${process.env.BASE_URL}/?auth=${token}`);
   } catch (error) {
     res.status(500).json({ message: error });
   }
