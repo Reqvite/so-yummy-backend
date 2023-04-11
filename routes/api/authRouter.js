@@ -5,6 +5,8 @@ const {
   logoutController,
   currentUserController,
   updateUserController,
+  googleAuthRedirectController,
+  loginGoogleAuthController,
 } = require("../../controllers/users");
 const { asyncWrapper } = require("../../helpers/apiHelpers");
 const { authMiddleware } = require("../../middlewares/authMiddleware");
@@ -31,6 +33,8 @@ router.patch(
   uploadCloud.single("avatar"),
   asyncWrapper(updateUserController)
 );
+router.get("/auth/google", asyncWrapper(googleAuthRedirectController));
+router.get("/:token", asyncWrapper(loginGoogleAuthController));
 
 module.exports = {
   authRouter: router,

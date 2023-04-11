@@ -5,6 +5,7 @@ const gravatar = require("gravatar");
 const registration = async (name, email, password) => {
   const avatarURL = gravatar.url(email);
   const existingUser = await User.findOne({ email });
+
   if (existingUser) {
     throw new RegistrationConflictError("User with this email already exists");
   }

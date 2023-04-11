@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-const { errorHandler } = require("./helpers/apiHelpers");
+const { errorHandler, asyncWrapper } = require("./helpers/apiHelpers");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const {
@@ -17,6 +17,7 @@ const {
   subscribeRouter,
   userInformationRouter,
 } = require("./routes/api");
+const { googleAuthCallbackController } = require("./controllers/users");
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json({ limit: "5mb" }));
 app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+app.get("/auth/google/callback", asyncWrapper(googleAuthCallbackController));
 app.use("/api/users", authRouter);
 app.use("/api/information", userInformationRouter);
 app.use("/api/recipes", recipesRouter);
