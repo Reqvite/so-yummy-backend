@@ -1,6 +1,4 @@
-const { NotAuthorizideError } = require("../../helpers/errors");
-const { Recipe } = require("../../models/recipesModel");
-const { User } = require("../../models/userModel");
+const { getOwnRecipes } = require("../../service/ownRecipes/getOwnRecipes");
 
 const getOwnRecipesController = async (req, res) => {
   const { _id } = req.user;
@@ -8,16 +6,7 @@ const getOwnRecipesController = async (req, res) => {
   const limit = 4;
   const startIndex = (page - 1) * limit;
 
-  const user = await User.findOne({ _id });
-
-  if (!user) {
-    throw new NotAuthorizideError("Email or password is wrong");
-  }
-
-  const count = await Recipe.countDocuments({ owner: _id });
-  const recipes = await Recipe.find({ owner: _id })
-    .skip(startIndex)
-    .limit(limit);
+  const { recipes, count } = await getOwnRecipes(limit, startIndex, _id);
 
   res.json({
     status: "success",
