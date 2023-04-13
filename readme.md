@@ -10,3 +10,7 @@ API endpoints are defined in the server-side code and handle incoming requests f
 To help with documentation and testing of the API, the So Yummy project utilizes Swagger, a tool that generates a user interface based on the OpenAPI specification. The Swagger UI allows developers to visualize and interact with the API's endpoints, making it easier to test and debug.
 
 [Swagger](https://so-yummy-api-x9xv.onrender.com/api-docs/)
+
+#Frontend:
+- [So Yummy Page](https://so-yummy.netlify.app/main)
+- [So Yummy repositoriy](https://github.com/Reqvite/so-yummy-project)
