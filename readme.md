@@ -11,6 +11,6 @@ To help with documentation and testing of the API, the So Yummy project utilizes
 
 [Swagger](https://so-yummy-api-x9xv.onrender.com/api-docs/)
 
-#Frontend:
+## Frontend:
 - [So Yummy Page](https://so-yummy.netlify.app/main)
 - [So Yummy repositoriy](https://github.com/Reqvite/so-yummy-project)
