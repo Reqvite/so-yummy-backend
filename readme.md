@@ -1,31 +1,12 @@
-## GoIT Node.js Course Template Homework
+# Back-end part of So Yummy Project
 
-Виконайте форк цього репозиторію для виконання домашніх завдань (2-6)
-Форк створить репозиторій на вашому http://github.com
+## About
+The back-end part of the So Yummy project is responsible for handling server-side logic, data storage, and communication between the front-end and the database. It includes a database that stores all recipe information, and user data.
 
-Додайте ментора до колаборації
+The back-end part of the project is built using Node.js and Express.js, which provide a robust and flexible framework for building web applications. The database management system used in this project is MongoDB, a document-oriented NoSQL database that stores data in JSON-like documents.
 
-Для кожної домашньої роботи створюйте свою гілку.
+API endpoints are defined in the server-side code and handle incoming requests from the front-end. The back-end also includes middleware for user authentication and authorization, which ensures that only authorized users can access certain resources or perform certain actions.
 
-- hw02
-- hw03
-- hw04
-- hw05
-- hw06
+To help with documentation and testing of the API, the So Yummy project utilizes Swagger, a tool that generates a user interface based on the OpenAPI specification. The Swagger UI allows developers to visualize and interact with the API's endpoints, making it easier to test and debug.
 
-Кожна нова гілка для др повинна робитися з master
-
-Після того, як ви закінчили виконувати домашнє завдання у своїй гілці, необхідно зробити пулл-реквест (PR). Потім додати ментора для рев'ю коду. Тільки після того, як ментор заапрувить PR, ви можете виконати мердж гілки з домашнім завданням у майстер.
-
-Уважно читайте коментарі ментора. Виправте зауваження та зробіть коміт у гілці з домашнім завданням. Зміни підтягнуться у PR автоматично після того, як ви відправите коміт з виправленнями на github
-Після виправлення знову додайте ментора на рев'ю коду.
-
-- При здачі домашньої роботи є посилання на PR
-- JS-код чистий та зрозумілий, для форматування використовується Prettier
-
-### Команди:
-
-- `npm start` &mdash; старт сервера в режимі production
-- `npm run start:dev` &mdash; старт сервера в режимі розробки (development)
-- `npm run lint` &mdash; запустити виконання перевірки коду з eslint, необхідно виконувати перед кожним PR та виправляти всі помилки лінтера
-- `npm lint:fix` &mdash; та ж перевірка лінтера, але з автоматичними виправленнями простих помилок
+[Swagger](https://so-yummy-api-x9xv.onrender.com/api-docs/)
