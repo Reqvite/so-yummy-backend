@@ -20,7 +20,6 @@ async function getUserInformation(userId) {
   const userInformation = {
     avatar: user.avatarURL,
     name: user.name,
-    // email: user.email,
     daysInApp: Math.floor(
       (new Date() - user.createdAt) / (1000 * 60 * 60 * 24)
     ),

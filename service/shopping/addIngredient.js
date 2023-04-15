@@ -1,18 +1,11 @@
 const { WrongParametersError } = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
-const { User } = require("../../models/userModel");
 
-const addIngredient = async (recipeId, ingredientId, _id) => {
+const addIngredient = async (recipeId, ingredientId, user) => {
   const recipe = await Recipe.findById(recipeId);
 
   if (!recipe) {
     throw new WrongParametersError(`Recipe not found`);
-  }
-
-  const user = await User.findById(_id);
-
-  if (!user) {
-    throw new WrongParametersError(`User not found`);
   }
 
   const [ingredient] = recipe.ingredients.filter(

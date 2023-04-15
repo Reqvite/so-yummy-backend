@@ -9,7 +9,7 @@ const removeOwnRecipe = async (recipeId, _id) => {
   }
 
   if (recipe.owner.toString() !== _id.toString()) {
-    throw new Error(`Unauthorized`);
+    throw new Error(`Recipe not found`);
   }
 
   await recipe.remove();

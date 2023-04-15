@@ -1,12 +1,10 @@
 const { WrongParametersError } = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
-const { User } = require("../../models/userModel");
 
 const deleteFavoriteController = async (req, res) => {
-  const { _id } = req.user;
+  const user = req.user;
   const { id } = req.params;
 
-  const user = await User.findOne({ _id });
   const recipe = await Recipe.findOne({ id });
 
   if (!recipe) {
@@ -19,7 +17,7 @@ const deleteFavoriteController = async (req, res) => {
   }
 
   user.favorites.splice(recipeIndex, 1);
-  recipe.favorites.splice(recipe.favorites.indexOf(_id), 1);
+  recipe.favorites.splice(recipe.favorites.indexOf(user._id), 1);
 
   await Promise.all([user.save(), recipe.save()]);
 

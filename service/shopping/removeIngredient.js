@@ -1,13 +1,8 @@
 const { WrongParametersError } = require("../../helpers/errors");
 const { User } = require("../../models/userModel");
 
-const removeIngredient = async (ingredientId, _id, recipeId) => {
-  const user = await User.findById(_id);
-
-  if (!user) {
-    throw new Error(`Unauthorized`);
-  }
-
+const removeIngredient = async (ingredientId, user, recipeId) => {
+  const { _id } = user;
   const recipeIndex = user.shoppingList.findIndex(
     (recipe) => recipe.recipeId === recipeId
   );

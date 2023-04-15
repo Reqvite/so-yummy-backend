@@ -1,12 +1,10 @@
 const { WrongParametersError } = require("../../helpers/errors");
 const { Recipe } = require("../../models/recipesModel");
-const { User } = require("../../models/userModel");
 
 const addFavoriteController = async (req, res) => {
-  const { _id } = req.user;
+  const user = req.user;
   const { id } = req.params;
 
-  const user = await User.findOne({ _id });
   const recipe = await Recipe.findOne({ id });
 
   if (!recipe) {
@@ -20,7 +18,7 @@ const addFavoriteController = async (req, res) => {
   }
 
   user.favorites.push(id);
-  recipe.favorites.push(_id);
+  recipe.favorites.push(user._id);
 
   await Promise.all([user.save(), recipe.save()]);
 
